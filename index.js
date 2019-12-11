@@ -1,5 +1,6 @@
 const dotenv = require('dotenv')
 const got = require('got')
+const { CronJob } = require('cron')
 
 dotenv.config()
 
@@ -99,4 +100,6 @@ async function generateSnapshot() {
   return true
 }
 
-generateSnapshot().then(process.exit)
+const job = new CronJob('0 0 * * *', generateSnapshot)
+
+job.start()
